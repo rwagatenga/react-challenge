@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react';
+import { connect } from "react-redux";
 
-function App() {
+import Home from "./views/Home"
+import * as actions from "./store/actions"
+
+function App(props: any) {
+	useEffect(() => {
+		props.onFetchUsers();
+	}, [props.user]);
+	
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+		<div
+			className="w-full	w-screen bg-white dark:bg-slate-800"
+			style={{ height: "60%" }}
+		>
+			<Home
+				users={props.users}
+				user={props.user}
+				onFetchUser={props.onFetchUser}
+				loading={props.loading}
+			/>
+		</div>
+	);
 }
 
-export default App;
+const mapStateToProps = (state: any) => {
+	return {
+		users: state.user.users,
+		user: state.user.user,
+		loading: state.user.loading
+	};
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+	return {
+		onFetchUsers: () => dispatch(actions.initUsers()),
+		onFetchUser: (username: string) => dispatch(actions.fetchUser(username)),
+	}
+}
+export default connect( mapStateToProps, mapDispatchToProps )( App );
