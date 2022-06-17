@@ -18,4 +18,4 @@ In the project directory, you can run:
 
 
 ## Design
-image.png
+![image](https://user-images.githubusercontent.com/34852897/174332539-6ca6536c-0889-4876-943d-42ff4fe16b0c.png)
